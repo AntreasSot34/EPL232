@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main(int argc, char *argv[] ) {
+//entoli apo arguments ./execu -d inputfile outfile
+	if( strcmp(argv[1]),"-d") == 0 ){
+  char input[100];
+	strcpy(input , argv[2]  );
+ char output[100]; 
+	strcpy(output , argv[3] );
+	
+	    
+    FILE *fp ;
+         fp = fopen(input, "r" ) ;
+         if ( fp == NULL )
+         {
+                 printf( "Could not open file ergasia.c\n" ) ;
+                 
+         }
+        else{	
+//piani tin proti grammi
+char data[500];
+char array[500][500];
+int j=0;
+         while( fgets ( data, 500, fp ) != NULL ){
+         	char *token;
+		   token = strtok( data, " \t\r\n");
+		   while( token != NULL ) 
+		   {
+			
+			//for( i=0;i< strlen(token); i++){
+			int size = strlen(token);
+				if ( strcmp(token[0],'(') == 0 && strcmp(token[size-1],')')== 0 ) {
+				    array[j]= '(';
+				    array[j+1]= strtok(NULL, "()");
+				    array[j+2]= ')';
+				}
+				else if( strcmp(token[size-1],',')==0 || strcmp(token[size-1],'.')==0 || strcmp(token[size-1],'!')==0
+	  strcmp(token[size-1],'?')==0 || strcmp(token[size-1],''')==0 || strcmp(token[size-1],'"')==0
+	|| strcmp(token[size-1],':')==0) {
+			char character=token[size-1];
+				array[j]= strtok(NULL, character);
+				 array[j+1]=character;		   
+					
+				} else 
+				    strcpy( array[j] , token);
+				
+			
+		      token = strtok(NULL, " \t\r\n");
+		   }
+		
+
+	 }
+
+for( i=0;i< strlen(array);i++)
+		printf( "%s\n",  array[i] );
+
+/*
+
+ 	for( i=0;i< strlen(array[i]);i++)
+		printf( "%s\n",  array[i] );
+
+	for( i=0;i< 100;i++){
+		for( j=0;j< 99;j++){
+				strcpy(temp , array[j]);
+				strcpy(array[j] , array[j+1]);
+				strcpy(array[j+1], temp);
+*/	
+		
+
+        fclose(fp) ; 
+}  
+	return 0;
+}
